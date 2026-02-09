@@ -22,3 +22,13 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/containerflow .
           docker push ${{ secrets.DOCKER_USERNAME }}/containerflow
+    - name: Set Kubernetes Context
+      uses: azure/k8s-set-context@v4
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl set image deployment/containerflow-deployment \
+        containerflow=saitejajinna/containerflow:latest

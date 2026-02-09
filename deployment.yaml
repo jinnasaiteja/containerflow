@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: containerflow-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: containerflow
+  template:
+    metadata:
+      labels:
+        app: containerflow
+    spec:
+      containers:
+      - name: containerflow
+        image: saitejajinna/containerflow:latest
+        ports:
+        - containerPort: 5000
